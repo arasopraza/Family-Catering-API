@@ -41,4 +41,10 @@ RSpec.describe Menu, type: :model do
     menu2.valid?
     expect(menu2.errors[:name]).to include("has already been taken")
   end
+
+  it 'is invalid with a description more than 150 words' do
+    menu = FactoryBot.build(:menu, description: 'You might be wondering, hey, I have not written any additional code, but the spec is green. Should I just skip this spec? While it is a valid question, we deem its necessary to keep this spec as it is a contract of our model: all Food should have a name and a description.')
+    menu.valid?
+    expect(menu.errors[:description]).to include("is too long (maximum is 150 characters)")
+  end
 end
